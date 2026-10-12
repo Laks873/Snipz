@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import com.laks873.snipz.ui.theme.SnipzTheme
 import com.laks873.snipz.ui.components.SubscriptionCard
 import androidx.compose.ui.graphics.Color
+import com.laks873.snipz.ui.components.OfferCard
+import androidx.compose.foundation.lazy.LazyRow
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +42,12 @@ fun ThemeCheck(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text("Hi! Lakshya", style = MaterialTheme.typography.headlineMedium)
+        Text("New offers", style = MaterialTheme.typography.titleMedium)
+        LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            item { OfferCard(name = "Photoshop", price = "₹1,676", backgroundColor = Color(0xFF0A1F44), badge = "Ps") }
+            item { OfferCard(name = "JioHotstar", price = "₹149", backgroundColor = Color(0xFF0F1014), badge = "JH") }
+            item { OfferCard(name = "Canva Pro", price = "₹500", backgroundColor = Color(0xFF5B2BC9), badge = "Ca") }
+        }
         Text("My Subscriptions", style = MaterialTheme.typography.titleMedium)
 
         // Dummy data for now. Real data comes from the database in Phase 3.
