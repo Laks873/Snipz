@@ -14,7 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.laks873.snipz.ui.theme.SnipzTheme
-
+import com.laks873.snipz.ui.components.SubscriptionCard
+import androidx.compose.ui.graphics.Color
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,29 +37,16 @@ fun ThemeCheck(modifier: Modifier = Modifier) {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 16.dp, vertical = 24.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text("Hi! Lakshya", style = MaterialTheme.typography.headlineMedium)
         Text("My Subscriptions", style = MaterialTheme.typography.titleMedium)
 
-        // Rough subscription card using the theme's card colour (dummy data)
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
-                .padding(16.dp)
-        ) {
-            Text("Netflix", style = MaterialTheme.typography.bodyMedium)
-            Text(
-                "₹499/month",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-            Spacer(Modifier.height(8.dp))
-            LinearProgressIndicator(progress = { 0.7f }, modifier = Modifier.fillMaxWidth())
-        }
-
-        Button(onClick = { }) { Text("Continue") }
+        // Dummy data for now. Real data comes from the database in Phase 3.
+        SubscriptionCard(name = "Netflix", price = "₹499", progress = 0.8f, iconColor = Color(0xFFE50914), daysLeft = 2)
+        SubscriptionCard(name = "Prime Video", price = "₹299", progress = 0.6f, iconColor = Color(0xFF00A8E1), daysLeft = 4)
+        SubscriptionCard(name = "Spotify", price = "₹119", progress = 0.3f, iconColor = Color(0xFF1DB954))
+        SubscriptionCard(name = "YouTube Premium", price = "₹149", progress = 0.1f, iconColor = Color(0xFFFF0000))
     }
 }
 
