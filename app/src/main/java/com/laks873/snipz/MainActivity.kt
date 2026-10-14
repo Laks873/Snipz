@@ -7,25 +7,52 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.laks873.snipz.ui.theme.SnipzTheme
-import com.laks873.snipz.ui.components.SubscriptionCard
-import androidx.compose.ui.graphics.Color
 import com.laks873.snipz.ui.components.OfferCard
-import androidx.compose.foundation.lazy.LazyRow
+import com.laks873.snipz.ui.components.SnipzBottomBar
+import com.laks873.snipz.ui.components.SnipzTab
+import com.laks873.snipz.ui.components.SubscriptionCard
+import com.laks873.snipz.ui.theme.SnipzTheme
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
             SnipzTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    ThemeCheck(modifier = Modifier.padding(innerPadding))
+                // Remembers which tab is selected. When it changes, the screen redraws.
+                var selectedTab by remember { mutableStateOf(SnipzTab.Home) }
+
+                Scaffold(
+                    modifier = Modifier.fillMaxSize(),
+                    bottomBar = {
+                        SnipzBottomBar(
+                            selectedTab = selectedTab,
+                            onTabSelected = { selectedTab = it }
+                        )
+                    }
+                ) { innerPadding ->
+                    when (selectedTab) {
+                        SnipzTab.Home -> ThemeCheck(modifier = Modifier.padding(innerPadding))
+                        else -> Box(
+                            modifier = Modifier.fillMaxSize().padding(innerPadding),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text("${selectedTab.label}: coming soon")
+                        }
+                    }
                 }
             }
         }
