@@ -29,35 +29,7 @@ import com.laks873.snipz.ui.theme.SnipzTheme
 
 // ---------- Temporary data models (replaced by the real database in Phase 3) ----------
 
-data class SubscriptionUi(
-    val name: String,
-    val price: String,
-    val progress: Float,
-    val iconColor: Color,
-    val daysLeft: Int? = null
-)
 
-data class OfferUi(
-    val name: String,
-    val price: String,
-    val backgroundColor: Color,
-    val badge: String
-)
-
-val sampleOffers = listOf(
-    OfferUi("Photoshop", "₹1,676", Color(0xFF0A1F44), "Ps"),
-    OfferUi("JioHotstar", "₹149", Color(0xFF0F1014), "JH"),
-    OfferUi("Canva Pro", "₹500", Color(0xFF5B2BC9), "Ca")
-)
-
-val sampleSubscriptions = listOf(
-    SubscriptionUi("Netflix", "₹499", 0.8f, Color(0xFFE50914), daysLeft = 2),
-    SubscriptionUi("Prime Video", "₹299", 0.6f, Color(0xFF00A8E1), daysLeft = 4),
-    SubscriptionUi("Spotify", "₹119", 0.3f, Color(0xFF1DB954)),
-    SubscriptionUi("YouTube Premium", "₹149", 0.1f, Color(0xFFFF0000)),
-    SubscriptionUi("Figma", "₹1,250", 0.5f, Color(0xFF1E1E1E)),
-    SubscriptionUi("Apple Music", "₹99", 0.45f, Color(0xFFFA243C))
-)
 
 // ---------- The screen ----------
 
@@ -169,6 +141,6 @@ private fun SectionTitle(text: String) {
 @Composable
 fun HomeScreenPreview() {
     SnipzTheme {
-        HomeScreen(userName = "Lakshya", offers = sampleOffers, subscriptions = sampleSubscriptions)
+        HomeScreen(userName = "Lakshya", offers = sampleOffers, subscriptions = sampleSubscriptions.filter { it.isActive })
     }
 }

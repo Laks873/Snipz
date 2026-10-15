@@ -18,6 +18,8 @@ import com.laks873.snipz.ui.screens.HomeScreen
 import com.laks873.snipz.ui.screens.sampleOffers
 import com.laks873.snipz.ui.screens.sampleSubscriptions
 import com.laks873.snipz.ui.theme.SnipzTheme
+import com.laks873.snipz.ui.screens.SubscriptionsScreen
+import com.laks873.snipz.ui.screens.sampleMonthlySpend
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +42,12 @@ class MainActivity : ComponentActivity() {
                         SnipzTab.Home -> HomeScreen(
                             userName = "Lakshya",
                             offers = sampleOffers,
+                            subscriptions = sampleSubscriptions.filter { it.isActive },
+                            modifier = Modifier.padding(innerPadding)
+                        )
+                        SnipzTab.Subscriptions -> SubscriptionsScreen(
                             subscriptions = sampleSubscriptions,
+                            monthlySpend = sampleMonthlySpend,
                             modifier = Modifier.padding(innerPadding)
                         )
                         else -> Box(

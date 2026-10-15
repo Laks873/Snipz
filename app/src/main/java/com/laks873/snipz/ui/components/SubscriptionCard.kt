@@ -28,6 +28,7 @@ fun SubscriptionCard(
     modifier: Modifier = Modifier,
     billingPeriod: String = "month",
     daysLeft: Int? = null,      // null hides the "x days left" text
+    showProgress: Boolean = true, // false for cancelled subscriptions
     onClick: () -> Unit = {}
 ) {
     Row(
@@ -48,7 +49,6 @@ fun SubscriptionCard(
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Medium
             )
-            // "₹499" in medium weight, "/month" in the lighter secondary colour
             Text(
                 text = buildAnnotatedString {
                     withStyle(SpanStyle(fontWeight = FontWeight.Medium)) { append(price) }
@@ -58,30 +58,31 @@ fun SubscriptionCard(
                 },
                 style = MaterialTheme.typography.labelSmall
             )
-            Spacer(Modifier.height(6.dp))
 
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                LinearProgressIndicator(
-                    progress = { progress },
-                    modifier = Modifier
-                        .weight(1f)
-                        .height(4.dp)
-                        .clip(RoundedCornerShape(50)),
-                    color = MaterialTheme.colorScheme.secondary,
-                    trackColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f),
-                    gapSize = 0.dp,
-                    drawStopIndicator = {}
-                )
-                if (daysLeft != null) {
-                    Spacer(Modifier.width(12.dp))
-                    Text(
-                        text = "$daysLeft days left",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+            if (showProgress) {
+                Spacer(Modifier.height(6.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    LinearProgressIndicator(
+                        progress = { progress },
+                        modifier = Modifier
+                            .weight(1f)
+                            .height(4.dp)
+                            .clip(RoundedCornerShape(50)),
+                        color = MaterialTheme.colorScheme.secondary,
+                        trackColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.2f),
+                        gapSize = 0.dp,
+                        drawStopIndicator = {}
                     )
-                } else {
-                    // Keeps the bar at about two-thirds width, like in the Figma
-                    Spacer(Modifier.weight(0.4f))
+                    if (daysLeft != null) {
+                        Spacer(Modifier.width(12.dp))
+                        Text(
+                            text = "$daysLeft days left",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    } else {
+                        Spacer(Modifier.weight(0.4f))
+                    }
                 }
             }
         }
